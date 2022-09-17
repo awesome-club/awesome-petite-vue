@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <title>Awesome Petite</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/petite-vue" defer></script>
+    <script type="module" defer src="/index.js"></script>
+    <link rel="stylesheet" href="/index.css">
+  </head>
+  
+  <body id="app" :class="{dark: dark}" v-cloak @vue:mounted="onMounted">
+    <div class="added" v-show="isAdded">Product added!</div>
+    
+    <header x-data="header" class="main">
+      <div class="dropdown">
+        <button class="lk" @click="toggle">
+          Cart
+          <span v-show="!isCartEmpty">${cartSize}</span>
+        </button>
+
+        <ul v-if="toggled">
+          <template v-for="product in cart">
+            <li>
+              <span v-text="product.qty"></span> x 
+              <span v-text="product.name"></span>
+            </li>
+          </template>
+        </ul>
+      </div>
+
+      <button class="lk" @click="toggleDark" v-text="dark ? 'Light' : 'Dark'"></button>
+    </header>
+
+    <main>
+      <section class="product" x-data="product">
+        <div class="cover" style="background-image: url('/img/01.jpeg')" />
+        </div>
+
+        <h1>
+          Amazing T-Shirt
+          <span class="price">$19</span>
+        </h1>
+
+        <h6>Colors Options</h6>
+        <ul class="colors">
+          <li>
+            <button class="red" 
+              @click="changeColor('red')" 
+              :class="{sel: color === 'red'}"></button>
+          </li>
+          <li>
+            <button class="purple" 
+              @click="changeColor('purple')"
+              :class="{sel: color === 'purple'}"></button>
+          </li>
+          <li>
+            <button class="green" 
+              @click="changeColor('green')"
+              :class="{sel: color === 'green'}"></button>
+          </li>
+        </ul>
+
+        <footer>
+          <input v-model="qty" />
+          <button class="add"
+            @click="addProduct('Amazing T-Shirt', qty, color)">
+          Add to cart
+        </button>
+        </footer>
+      </section>
+
+      <section x-data class="related">
+        <h3>Related</h3>
+        <article>
+          <div class="cover" 
+            style="background-image: url('/img/02.jpeg')"
+            @click.once="addProduct('Jeans')">
+          </div>
+        </article>
+
+        <article>
+          <div class="cover" 
+            style="background-image: url('/img/03.jpeg')"
+            @click.once="addProduct('Jeans')">
+          </div>
+        </article>
+
+        <article>
+          <div class="cover" 
+            style="background-image: url('/img/04.jpeg')"
+            @click.once="addProduct('Jeans')">
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
